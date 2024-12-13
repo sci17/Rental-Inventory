@@ -79,6 +79,17 @@ def update_customer(id):
     mysql.connection.commit()
     return make_response(jsonify({"message": "customer updated successfuly", "rows_affected": rows_affected}), 201)
 
+@app.route("/customers/<int:id>", methods=["DELETE"])
+def delete_customers(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("""DELETE FROM customers where customer_id = %s""",(id,))
+
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "customers deleted successfully!", "rows_affected": rows_affected}), 200)
+
   
 # accounts
 @app.route("/accounts", methods=["GET"])
@@ -151,6 +162,17 @@ def update_accounts(id):
     mysql.connection.commit()
     return make_response(jsonify({"message": "accounts updated successfuly", "rows_affected": rows_affected}), 201)
 
+@app.route("/accounts/<int:id>", methods=["DELETE"])
+def delete_accounts(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("""DELETE FROM accounts where account_id = %s""",( id,))
+
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "account deleted successfully!", "rows_affected": rows_affected}), 200)
+
 
 # financial
 @app.route("/financial", methods=["GET"])
@@ -216,6 +238,19 @@ def update_financial(id):
     rows_affected = cur.rowcount
     mysql.connection.commit()
     return make_response(jsonify({"message": "financial transaction updated successfuly", "rows_affected": rows_affected}), 201)
+
+
+@app.route("/financial/<int:id>", methods=["DELETE"])
+def delete_financial(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("""DELETE FROM financial_transaction where transaction_id = %s""",( id,))
+
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "financial transaction deleted successfully!", "rows_affected": rows_affected}), 200)
+
 
 
 # purchases
@@ -309,6 +344,18 @@ def update_purchase(id):
     return make_response(jsonify({"message": "customer purchases updated successfuly", "rows_affected": rows_affected}), 201)
 
 
+@app.route("/purchases/<int:id>", methods=["DELETE"])
+def delete_purchase(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("""DELETE FROM customer_item_purchases where purchase_id = %s""",( id,))
+
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "purchased item deleted successfully!", "rows_affected": rows_affected}), 200)
+
+
 # rentals
 @app.route("/rentals", methods=["GET"])
 def get_rentals():
@@ -371,6 +418,19 @@ def update_rentals(id):
     return make_response(jsonify({"message": "customer rental updated successfuly", "rows_affected": rows_affected}), 201)
 
 
+@app.route("/rentals/<int:id>", methods=["DELETE"])
+def delete_rentals(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("""DELETE FROM customer_item_rentals where item_rental_id = %s""",( id,))
+
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "rental deleted successfully!", "rows_affected": rows_affected}), 200)
+
+
+
 # item type
 @app.route("/item_type", methods=["GET"])
 def get_item_type():
@@ -423,6 +483,19 @@ def update_item_type(id):
     rows_affected = cur.rowcount
     mysql.connection.commit()
     return make_response(jsonify({"message": "item type updated successfuly", "rows_affected": rows_affected}), 201)
+
+
+@app.route("/item_type/<int:id>", methods=["DELETE"])
+def delete_item_type(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("""DELETE FROM inventory_item_types where item_type_code = %s""",( id,))
+
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "item type deleted successfully!", "rows_affected": rows_affected}), 200)
+
 
 # items
 @app.route("/items", methods=["GET"])
@@ -487,6 +560,19 @@ def update_items(id):
     mysql.connection.commit()
     return make_response(jsonify({"message": "items updated successfuly", "rows_affected": rows_affected}), 201)
 
+
+@app.route("/items/<int:id>", methods=["DELETE"])
+def delete_items(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("""DELETE FROM inventory_items where item_id = %s""",( id,))
+
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "item(s) deleted successfully!", "rows_affected": rows_affected}), 200)
+
+
 # purchase_status_code
 @app.route("/status_code", methods=["GET"])
 def get_status_code():
@@ -540,6 +626,19 @@ def update_status_code(id):
     rows_affected = cur.rowcount
     mysql.connection.commit()
     return make_response(jsonify({"message": "status code updated successfuly", "rows_affected": rows_affected}), 201)
+
+
+@app.route("/status_code/<int:id>", methods=["DELETE"])
+def delete_status_code(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("""DELETE FROM purchase_status_codes where purchase_status_code = %s""",( id,))
+
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "status code deleted successfully!", "rows_affected": rows_affected}), 200)
+
 
 
 #  transaction types
@@ -596,6 +695,19 @@ def update_transaction(id):
     return make_response(jsonify({"message": "transaction type updated successfuly", "rows_affected": rows_affected}), 201)
 
 
+@app.route("/transaction/<int:id>", methods=["DELETE"])
+def delete_transaction(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("""DELETE FROM transaction_types where transaction_type_code = %s""",( id,))
+
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "transaction type deleted successfully!", "rows_affected": rows_affected}), 200)
+
+
+
 # payment methods
 @app.route("/payment", methods=["GET"])
 def get_payment():
@@ -648,6 +760,19 @@ def update_payments(id):
     rows_affected = cur.rowcount
     mysql.connection.commit()
     return make_response(jsonify({"message": "payment method updated successfuly", "rows_affected": rows_affected}), 201)
+
+
+@app.route("/paymnet/<int:id>", methods=["DELETE"])
+def delete_payment(id):
+    cur = mysql.connection.cursor()
+
+    cur.execute("""DELETE FROM payment_method where payment_method_code = %s""",( id,))
+
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "payment method deleted successfully!", "rows_affected": rows_affected}), 200)
+
 
 
 
