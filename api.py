@@ -1,6 +1,11 @@
-from flask import Flask, make_response, jsonify, request
+from flask import Flask, make_response, jsonify, request, abort
 from flask_mysqldb import MySQL 
+import jwt
+import datetime
+from functools import wraps
+from werkzeug.security import generate_password_hash, check_password_hash
 
+SECRET_KEY = "CSE1"
 
 app = Flask(__name__)
 
@@ -9,13 +14,12 @@ app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
 app.config["MYSQL_PASSWORD"] = "Spledelyn1704"
 app.config["MYSQL_DB"] = "finalldrill"
-
 app.config["MYSQL_CURSORCLASS"] ="DictCursor"
 
 mysql = MySQL(app)
 @app.route("/")
 def index():
-    return "<p>Hello, World</p>"
+    return "<h1>Welcome to Item Rental Inventory</h1>"
 
 # CUSTOMERS CRUD
 @app.route("/customers", methods=["GET"])
