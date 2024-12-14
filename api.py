@@ -1,9 +1,5 @@
-from flask import Flask, make_response, jsonify, request, abort
+from flask import Flask, make_response, jsonify, request
 from flask_mysqldb import MySQL 
-import jwt
-import datetime
-from functools import wraps
-from werkzeug.security import generate_password_hash, check_password_hash
 
 SECRET_KEY = "CSE1"
 
