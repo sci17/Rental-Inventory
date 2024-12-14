@@ -1,6 +1,7 @@
 from flask import Flask, make_response, jsonify, request
 from flask_mysqldb import MySQL 
 
+
 app = Flask(__name__)
 
 
@@ -13,30 +14,31 @@ app.config["MYSQL_CURSORCLASS"] ="DictCursor"
 
 mysql = MySQL(app)
 @app.route("/")
-def hello_world():
+def index():
     return "<p>Hello, World</p>"
 
 # CUSTOMERS CRUD
 @app.route("/customers", methods=["GET"])
 def get_customers():
-    cur = mysql.connection.cursor()
-    query = """
-    select * from customers
-    """
-    cur.execute(query)
-    data = cur.fetchall()
-    return make_response(jsonify(data), 200)
+        cur = mysql.connection.cursor()
+        query = """
+        select * from customers
+        """
+        cur.execute(query)
+        data = cur.fetchall()
+        return make_response(jsonify(data), 200)
 
 @app.route("/customers/<int:id>", methods=["GET"])
 def get_customer_id(id):
-    cur = mysql.connection.cursor()
-    query = """
-    SELECT * FROM CUSTOMERS where customer_id = {}
-    """ .format(id)
-    cur.execute(query)
-    data = cur.fetchall()
-    return make_response(jsonify(data), 200)
-
+        cur = mysql.connection.cursor()
+        query = """
+        SELECT * FROM CUSTOMERS where customer_id = {}
+        """ .format(id)
+        cur.execute(query)
+        data = cur.fetchall()
+        return make_response(jsonify(data), 200)
+    
+        
 @app.route("/customers", methods=["POST"])
 def add_customer():
     cur = mysql.connection.cursor()
